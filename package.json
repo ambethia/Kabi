@@ -26,6 +26,7 @@
     "html-webpack-plugin": "^2.24.0",
     "node-sass": "^3.10.1",
     "postcss-loader": "^1.0.0",
+    "react-hot-loader": "^3.0.0-beta.6",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "stylelint": "^7.5.0",
