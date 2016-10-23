@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import App from './components/App'
 
+import './styles/screen.sass'
+
 const render = (root) => {
   ReactDOM.render(
     <AppContainer>{root}</AppContainer>,

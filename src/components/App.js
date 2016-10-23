@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import '../styles/screen.sass'
+import Canvas from './Canvas'
 
 class App extends Component {
 
   render () {
-    return <div>
-      <h1>Hello, World!</h1>
-    </div>
+    return <Canvas height={1080 / 2} width={1920 / 2} />
   }
 }
 
