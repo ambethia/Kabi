@@ -1,0 +1,71 @@
+@import '../../styles/color'
+
+.layout
+  width: 100vw
+  height: 100vh
+  display: flex
+  flex-direction: column
+  align-content: stretch
+
+  > main
+    flex: 1
+
+  > .controls
+    display: flex
+    flex-direction: column
+    background-color: $mono-1
+    height: 20vh
+
+    header, li.layer
+      display: flex
+      height: 2em
+      line-height: 2em
+      border-bottom: 1px solid darken($mono-1, 5%)
+
+    ul
+      flex: 1
+      margin: 0
+      padding-left: 0
+
+.controls i
+  display: block
+  border-radius: 0.5em
+  width: 1em
+  height: 1em
+
+  &.enabled
+    background-color: $mono-0
+
+  &.disabled
+    background-color: darken($mono-1, 5%)
+
+.meta
+  width: 30vw
+  display: flex
+
+  .name
+    flex: 1
+    padding-left: 0.5em
+
+  > div.toggle
+    width: 1.5em
+    display: flex
+    justify-content: center
+    align-items: center
+
+.timeline
+  display: flex
+  align-items: stretch
+  justify-content: flex-start
+  align-content: stretch
+
+.frame
+  width: 1.5em
+  text-align: center
+
+.frame.current
+  background-color: $mono-3
+  color: $mono-0
+
+.layer
+  border-bottom: 1px solid darken($mono-1, 10%)
