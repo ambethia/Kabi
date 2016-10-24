@@ -5,10 +5,12 @@ import App from './components/App'
 
 import './styles/screen.sass'
 
-const render = (root) => {
+const root = document.getElementById('root')
+
+const render = (app) => {
   ReactDOM.render(
-    <AppContainer>{root}</AppContainer>,
-    document.getElementById('root')
+    <AppContainer>{app}</AppContainer>,
+    root
   )
 }
 

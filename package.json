@@ -37,6 +37,8 @@
     "webpack-validator": "^2.2.9"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
+    "ploma": "github:evhan55/ploma",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "whatwg-fetch": "^1.0.0"
