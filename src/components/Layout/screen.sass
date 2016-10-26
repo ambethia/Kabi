@@ -1,5 +1,8 @@
 @import '../../styles/color'
 
+$base-dot-size: 1em
+$frame-width: 1.5em
+
 .layout
   width: 100vw
   height: 100vh
@@ -20,6 +23,7 @@
       display: flex
       height: 2em
       line-height: 2em
+      border-top: 1px solid lighten($mono-1, 10%)
       border-bottom: 1px solid darken($mono-1, 5%)
 
     ul
@@ -29,9 +33,9 @@
 
 .controls i
   display: block
-  border-radius: 0.5em
-  width: 1em
-  height: 1em
+  border-radius: $base-dot-size / 2
+  width: $base-dot-size
+  height: $base-dot-size
 
   &.enabled
     background-color: $mono-0
@@ -48,24 +52,45 @@
     padding-left: 0.5em
 
   > div.toggle
-    width: 1.5em
+    width: $frame-width
     display: flex
     justify-content: center
     align-items: center
+
+$timeline-divider: lighten($mono-1, 5%)
 
 .timeline
   display: flex
   align-items: stretch
   justify-content: flex-start
   align-content: stretch
+  flex: 1
+  background-image: repeating-linear-gradient(90deg, $timeline-divider, $timeline-divider 1px, transparent 1px, transparent 1.5em)
 
-.frame
-  width: 1.5em
-  text-align: center
+  > div
+    width: $frame-width
+    text-align: center
 
-.frame.current
-  background-color: $mono-3
-  color: $mono-0
+    &.current
+      background-color: $mono-3
+      color: $mono-0
 
 .layer
+  border-top: 1px solid lighten($mono-1, 10%)
   border-bottom: 1px solid darken($mono-1, 10%)
+  display: flex
+
+$frame-divider: lighten($mono-1, 10%)
+
+.frames
+  background-image: repeating-linear-gradient(90deg, $frame-divider, $frame-divider 1px, transparent 1px, transparent 1.5em)
+  height: $base-dot-size * 2
+  position: relative
+  flex: 1
+
+  .frame
+      position: absolute
+      border-radius: $base-dot-size / 2
+      margin-top: $base-dot-size / 2
+      height: $base-dot-size
+      background-color: $accent
