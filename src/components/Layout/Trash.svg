@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-272,0)">
+        <g id="Trash" transform="matrix(1,0,0,1,272,0)">
+            <rect x="0" y="0" width="128" height="128" style="fill:none;"/>
+            <g transform="matrix(1,0,0,1,-272,0)">
+                <path d="M296.298,31.38L306.005,106.914C306.005,106.914 320.4,116.582 336,116.582C351.6,116.582 362.732,107.878 362.732,107.878L374.115,29.084C374.115,29.084 356.539,45.197 336,45.197C315.461,45.197 296.298,31.38 296.298,31.38Z" style="fill:rgb(92,99,112);"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-272,0)">
+                <path d="M297.895,29.084C297.895,29.084 315.354,43.14 335.207,42.697C357.058,42.209 371.03,29.084 371.03,29.084C371.03,29.084 368.427,23.597 335.207,23.431C299.833,23.255 297.895,29.084 297.895,29.084Z" style="fill:rgb(92,99,112);"/>
+            </g>
+        </g>
+    </g>
+</svg>

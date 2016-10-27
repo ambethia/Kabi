@@ -1,5 +1,6 @@
 import React, { Component, PropTypes as T } from 'react'
 import classNames from 'classnames/bind'
+import Icon from './Icon'
 import style from './screen.sass'
 
 const cx = classNames.bind(style)
@@ -32,31 +33,30 @@ class Layout extends Component {
       <div className={style.controls}>
         <header>
           <div className={style.meta}>
-            <div className={style.name} />
-            <div className={cx('visible', 'toggle')}><i /></div>
-            <div className={cx('ghosted', 'toggle')}><i /></div>
+            <button><Icon glyph='add' /></button>
+            <button><Icon glyph='trash' /></button>
           </div>
           <div className={style.timeline}>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div className={style.current}>5</div>
-            <div>6</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-            <div>10</div>
-            <div>11</div>
-            <div>12</div>
+            <div><span>1</span></div>
+            <div><span>2</span></div>
+            <div><span>3</span></div>
+            <div><span>4</span></div>
+            <div className={style.current}><span>5</span></div>
+            <div><span>6</span></div>
+            <div><span>7</span></div>
+            <div><span>8</span></div>
+            <div><span>9</span></div>
+            <div><span>10</span></div>
+            <div><span>11</span></div>
+            <div><span>12</span></div>
           </div>
         </header>
         <ul className={style.layers}>
           <li className={style.layer}>
             <div className={style.meta}>
-              <div className={style.name}>Layer Name</div>
-              <div className={style.toggle}><i className={cx('enabled')} /></div>
-              <div className={style.toggle}><i className={cx('disabled')} /></div>
+              <div className={style.name}>Layer 1</div>
+              <div className={style.toggle}><Icon glyph='eye' className={cx('enabled')} /></div>
+              <div className={style.toggle}><Icon glyph='ghost' className={cx('disabled')} /></div>
             </div>
             <div className={style.frames}>
               <div className={style.frame} style={this.frameStyle(1, 1)} />
