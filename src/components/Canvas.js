@@ -19,7 +19,7 @@ class Canvas extends Component {
 
   componentDidMount () {
     this.context = this.canvas.getContext('2d')
-    this.ploma = new BallpointPen(this.canvas, {})
+    this.ploma = new BallpointPen(this.canvas, { paperColor: '#eee' })
     this.ploma.setStrokes(this.state.strokes)
     this.canvas.addEventListener('pointerdown', this.downHandler)
     this.canvas.addEventListener('pointerup', this.upHandler)
@@ -45,7 +45,7 @@ class Canvas extends Component {
       isDrawing: true,
       currentStroke: [{ x, y, p }]
     })
-    // this.ploma.beginStroke(x, y, p)
+    this.ploma.beginStroke(x, y, p)
   }
 
   upHandler = (event) => {
@@ -58,7 +58,7 @@ class Canvas extends Component {
       strokes: [...this.state.strokes, stroke],
       currentStroke: []
     })
-    // this.ploma.endStroke(x, y, p)
+    this.ploma.endStroke(x, y, p)
   }
 
   moveHandler = (event) => {
@@ -69,18 +69,18 @@ class Canvas extends Component {
       this.setState({
         currentStroke: [...this.state.currentStroke, { x, y, p }]
       })
-      // this.ploma.extendStroke(x, y, p)
+      this.ploma.extendStroke(x, y, p)
     }
   }
 
   draw () {
-    const ctx = this.context
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    const strokes = this.state.strokes
-    for (let i = 0; i < strokes.length; i++) {
-      this.drawStroke(strokes[i], 'red', ctx)
-    }
-    this.drawStroke(this.state.currentStroke, 'orange', ctx)
+    // const ctx = this.context
+    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    // const strokes = this.state.strokes
+    // for (let i = 0; i < strokes.length; i++) {
+    //   this.drawStroke(strokes[i], 'red', ctx)
+    // }
+    // this.drawStroke(this.state.currentStroke, 'orange', ctx)
   }
 
   drawStroke (stroke, color, ctx) {

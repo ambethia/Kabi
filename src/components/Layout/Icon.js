@@ -7,6 +7,9 @@ const ICONS = {
   add: require('./Add.svg'),
   eye: require('./Eye.svg'),
   ghost: require('./Ghost.svg'),
+  loop: require('./Loop.svg'),
+  pause: require('./Pause.svg'),
+  play: require('./Play.svg'),
   trash: require('./Trash.svg')
 }
 

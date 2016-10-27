@@ -15,6 +15,9 @@ $std-transistion: all 200ms ease
 
   > main
     flex: 1
+    display: flex
+    justify-content: center
+    align-items: center
 
   > .controls
     display: flex
@@ -25,28 +28,16 @@ $std-transistion: all 200ms ease
 
     header
       display: flex
-      height: 1em
-      line-height: 1em
+      height: 1.5em
+      line-height: 1.5em
       border-top: 1px solid lighten($mono-1, 10%)
       border-bottom: 1px solid darken($mono-1, 5%)
 
       .meta
-        button
-          padding: 0
-          margin: 0 0.25em
-          border: none
-          background-color: transparent
-
-          &:focus
-            outline: none
-          &:hover
-            .icon
-              filter: brightness(200%) $icon-drop-shadow
-
-          &:active
-            .icon
-              filter: brightness(180%) drop-shadow(0px -1px 0 lighten($mono-0, 10%))
-
+        justify-content: space-between
+        > div
+          display: flex
+          align-items: center
 
     ul
       flex: 1
@@ -57,15 +48,25 @@ $std-transistion: all 200ms ease
   filter: brightness(180%) $icon-drop-shadow
   transition: $std-transistion
 
-  &.enabled
-    filter: brightness(180%) $icon-drop-shadow
+.enabled .icon
+  filter: brightness(180%) $icon-drop-shadow
 
-  &.disabled
-    opacity: 0.33
+.disabled .icon
+  opacity: 0.33
 
 .meta
   flex: 0 0 30vw
+  padding: 0 0.25em
   display: flex
+  align-items: center
+
+  .color
+    margin-left: calc(0.25em - 2px)
+    .swatch
+      width: 1em
+      height: 1em
+      border: 2px solid $mono-2
+      box-shadow: inset 0 1px 0 fade-out($mono-0, 0.5), 0 1px 0 lighten($mono-0, 10%)
 
   .name
     flex: 1
@@ -77,6 +78,25 @@ $std-transistion: all 200ms ease
     display: flex
     justify-content: center
     align-items: center
+
+  button
+    padding: 0
+    margin: 0 0.25em
+    border: none
+    background-color: transparent
+    cursor: pointer
+
+    &:focus
+      outline: none
+
+    &:not(.toggle)
+      &:hover
+        .icon
+          filter: brightness(200%) $icon-drop-shadow
+
+      &:active
+        .icon
+          filter: brightness(180%) drop-shadow(0px -1px 0 lighten($mono-0, 10%))
 
 $timeline-divider: lighten($mono-1, 5%)
 
@@ -93,8 +113,11 @@ $timeline-divider: lighten($mono-1, 5%)
     span
       font-size: 0.8em
 
+    &.loop
+      background-color: fade-out($green, 0.8)
+
     &.current
-      background-color: $mono-3
+      background-color: $green
       color: $mono-0
       text-shadow: 0 1px 0 lighten($mono-3, 20%)
 
