@@ -1,6 +1,7 @@
 import React, { PropTypes as T } from 'react'
 import classNames from 'classnames/bind'
 import style from './screen.sass'
+
 const cx = classNames.bind(style)
 
 const ICONS = {

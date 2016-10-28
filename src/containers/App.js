@@ -3,19 +3,15 @@ import { } from '../actions'
 
 import AppView from '../components/AppView'
 
-const mapStateToProps = state => ({
-  controls: { ...state.controls },
-  animation: { ...state.animation }
-})
-
-const mapDispatchToProps = dispatch => ({
-  actions: {
-  }
-})
-
 const App = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  state => ({
+    controls: { ...state.controls },
+    animation: { ...state.animation }
+  }),
+  dispatch => ({
+    actions: {
+    }
+  })
 )(AppView)
 
 export default App

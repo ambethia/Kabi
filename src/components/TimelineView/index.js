@@ -5,13 +5,17 @@ import style from './screen.sass'
 
 const cx = classNames.bind(style)
 
-const TimelineView = ({ controls, animation }) => (
+const TimelineView = ({ controls, animation, onSetFrame }) => (
   <div className={style.timeline}>
     <header style={{width: `calc(1.5em * ${controls.totalFrames})`}}>
       {[...Array(controls.totalFrames).keys()].map((i) => (
-        <div className={cx({
-          loop: ++i && controls.looping && i >= controls.loopFrom === i <= controls.loopTo,
-          current: i === controls.currentFrame })} key={i}>
+        <div
+          className={cx({
+            loop: ++i && controls.looping && i >= controls.loopFrom === i <= controls.loopTo,
+            current: i === controls.currentFrame })}
+          onClick={() => onSetFrame(i)}
+          key={i}
+        >
           <span>{i}</span>
         </div>
       ))}
