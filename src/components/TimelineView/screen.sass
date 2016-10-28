@@ -1,12 +1,11 @@
 @import ../../styles/utility
 
 .timeline
-  overflow-x: scroll
   flex: 1
+  overflow-x: scroll
 
   header
     display: flex
-    justify-content: flex-start
     height: 2em
     line-height: 2em
     border-top: 1px solid $mono-1
@@ -28,6 +27,11 @@
         background-color: $green
         color: $mono-0
         text-shadow: 0 1px 0 lighten($mono-3, 20%)
+
+.layers
+  flex: 1
+  margin: 0
+  padding-left: 0
 
 .layer
   display: flex

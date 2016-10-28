@@ -1,7 +1,7 @@
 const initialState = {
   fps: 24,
-  width: 1922 / 2,
-  height: 1080 / 2,
+  width: 1922 / 4,
+  height: 1080 / 4,
   backgroundColor: '#ccc',
   layers: [{
     name: 'Layer 1',

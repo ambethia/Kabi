@@ -21,13 +21,13 @@ $drop-shadow: drop-shadow(0px 1px 0 lighten($mono-0, 10%))
     filter: brightness(180%) $drop-shadow
 
   &.active img
-    filter: saturate(180%) brightness(200%) drop-shadow(0 0 2px $accent) hue-rotate(-45deg)
+    filter:  brightness(200%) saturate(180%) drop-shadow(0 0 2px $accent) hue-rotate(-45deg)
 
   &:hover.active img
-    filter: saturate(200%) brightness(220%) drop-shadow(0 0 4px $accent) hue-rotate(-45deg)
+    filter: brightness(220%) saturate(200%) drop-shadow(0 0 4px $accent) hue-rotate(-45deg)
 
   &.disabled img
-    opacity: 0.33
+    filter: brightness(120%) $drop-shadow
 
   img
     filter: brightness(180%) $drop-shadow

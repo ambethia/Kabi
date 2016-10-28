@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
-import App from './components/App'
+import App from './containers/App'
 import reducer from './reducers'
 import './styles/screen.sass'
 
@@ -25,8 +25,8 @@ const render = (app) => {
 render(<App />)
 
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    const NextApp = require('./components/App').default
+  module.hot.accept('./containers/App', () => {
+    const NextApp = require('./containers/App').default
     render(<NextApp />)
   })
 }

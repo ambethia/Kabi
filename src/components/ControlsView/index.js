@@ -1,6 +1,5 @@
 import React, { PropTypes as T } from 'react'
 import IconButton from '../IconButton'
-import LayerListView from '../LayerListView'
 import LayerView from './LayerView'
 import style from './screen.sass'
 
@@ -29,7 +28,11 @@ const ControlsView = ({ controls, animation, actions }) => (
         />
       </div>
     </header>
-    <LayerListView layers={animation.layers} view={LayerView} />
+    <ul className={style.layers}>
+      {animation.layers.map((layer, i) => (
+        <LayerView {...layer} key={i} />
+      ))}
+    </ul>
   </div>
 )
 
