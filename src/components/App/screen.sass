@@ -1,0 +1,22 @@
+@import ../../styles/utility
+
+.app
+  width: 100vw
+  height: 100vh
+  display: flex
+  flex-direction: column
+  align-content: stretch
+
+  > main
+    flex: 1
+    display: flex
+    justify-content: center
+    align-items: center
+    overflow: scroll
+
+  > nav
+    display: flex
+    background-color: $mono-1
+    height: 20vh
+    min-height: 8em
+    text-shadow: 0 1px 0 lighten($mono-0, 10%)

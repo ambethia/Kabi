@@ -1,0 +1,51 @@
+@import ../../styles/utility
+
+.timeline
+  overflow-x: scroll
+  flex: 1
+
+  header
+    display: flex
+    justify-content: flex-start
+    height: 2em
+    line-height: 2em
+    border-top: 1px solid $mono-1
+    border-bottom: 1px solid darken($mono-1, 10%)
+    background-color: darken($mono-1, 5%)
+    background-image: repeating-linear-gradient(90deg, $timeline-divider, $timeline-divider 1px, transparent 1px, transparent 1.5em)
+
+    > div
+      flex: 0 0 $frame-width
+      text-align: center
+
+      span
+        font-size: 0.8em
+
+      &.loop
+        background-color: fade-out($green, 0.8)
+
+      &.current
+        background-color: $green
+        color: $mono-0
+        text-shadow: 0 1px 0 lighten($mono-3, 20%)
+
+.layer
+  display: flex
+  height: 2em
+  line-height: 2em
+  border-top: 1px solid lighten($mono-1, 10%)
+  border-bottom: 1px solid darken($mono-1, 10%)
+
+  .frames
+    background-image: repeating-linear-gradient(90deg, $frame-divider, $frame-divider 1px, transparent 1px, transparent 1.5em)
+    height: $base-dot-size * 2
+    position: relative
+    flex: 1
+
+  .frame
+      position: absolute
+      border-radius: $base-dot-size / 2
+      margin-top: $base-dot-size / 2
+      height: $base-dot-size
+      background-color: $accent
+      box-shadow: 0 2px 0 hsla($base-hue, 66%, 33%, 0.5)

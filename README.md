@@ -4,11 +4,14 @@ Proposed schema for application state:
 
 ```
 {
-  playing: Boolean,
-  currentFrame: Integer,
-  loopFrom: Integer,
-  loopTo: Integer,
-  ghosting: Boolean,
+  controls: {
+    playing: Boolean,
+    looping: Boolean,
+    currentFrame: Integer,
+    loopFrom: Integer,
+    loopTo: Integer,
+    ghosting: Boolean
+  },
   animation: {
     fps: Float,
     width: Integer,

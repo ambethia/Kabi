@@ -43,7 +43,7 @@ const common = {
       test: /\.(sass|s?css)$/,
       loaders: [
         'style',
-        'css?camelCase&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        'css?camelCase&modules&importLoaders=1&localIdentName=[local]_[hash:base64:5]',
         'postcss',
         'sass'
       ]

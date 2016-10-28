@@ -1,5 +1,5 @@
 import React, { Component, PropTypes as T } from 'react'
-import { BallpointPen } from '../ploma'
+import { BallpointPen } from '../../ploma'
 
 class Canvas extends Component {
 
