@@ -3,7 +3,7 @@ const initialState = {
   looping: false,
   ghosting: true,
   currentFrame: 1,
-  totalFrames: 32,
+  totalFrames: 64,
   loopFrom: 1,
   loopTo: 8,
   selectedLayer: 0

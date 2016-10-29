@@ -1,5 +1,4 @@
 import React, { Component, PropTypes as T } from 'react'
-import { BallpointPen } from '../../ploma'
 
 class CanvasView extends Component {
 
@@ -21,7 +20,6 @@ class CanvasView extends Component {
   }
 
   componentDidMount () {
-    this.ploma = new BallpointPen(this.oCanvas)
     this.iContext = this.iCanvas.getContext('2d')
     this.oContext = this.oCanvas.getContext('2d')
     this.iCanvas.addEventListener('pointerdown', this.downHandler)
@@ -47,9 +45,10 @@ class CanvasView extends Component {
     const x = event.offsetX
     const y = event.offsetY
     const p = event.pressure
+    const t = new Date().getTime()
     this.setState({
       isDrawing: true,
-      currentStroke: [{ x, y, p }]
+      currentStroke: [{ x, y, p, t }]
     })
   }
 
@@ -57,7 +56,8 @@ class CanvasView extends Component {
     const x = event.offsetX
     const y = event.offsetY
     const p = event.pressure
-    const stroke = [...this.state.currentStroke, { x, y, p }]
+    const t = new Date().getTime()
+    const stroke = [...this.state.currentStroke, { x, y, p, t }]
     this.setState({
       isDrawing: false,
       currentStroke: []
@@ -73,8 +73,9 @@ class CanvasView extends Component {
       const x = event.offsetX
       const y = event.offsetY
       const p = event.pressure
+      const t = new Date().getTime()
       this.setState({
-        currentStroke: [...this.state.currentStroke, { x, y, p }]
+        currentStroke: [...this.state.currentStroke, { x, y, p, t }]
       })
     }
   }
@@ -100,29 +101,83 @@ class CanvasView extends Component {
   }
 
   drawStroke (stroke, color, ctx) {
-    ctx.fillStyle = color
-    for (let j = 0; j < stroke.length; j++) {
-      const { x, y, p } = stroke[j]
-      ctx.beginPath()
-      ctx.arc(x, y, 4 * p, 0, Math.PI * 2)
-      ctx.fill()
-    }
+    // ctx.fillStyle = color
+    // ctx.lineWidth = 1
+    // for (let j = 0; j < stroke.length; j++) {
+    //   const { x, y, p } = stroke[j]
+    //   ctx.beginPath()
+    //   // ctx.arc(x, y, 8 * p, 0, Math.PI * 2)
+    //   ctx.rect(x - 1.5, y - 1.5, 3, 3)
+    //   ctx.stroke()
+    // }
 
-    if (stroke[0]) {
-      ctx.lineWidth = 0.25
-      ctx.strokeStyle = color
-      ctx.beginPath()
-      ctx.moveTo(stroke[0].x, stroke[0].y)
+    if (stroke.length > 0) {
+      // ctx.lineWidth = 1
+      // ctx.strokeStyle = 'red'
+      // ctx.beginPath()
+      // ctx.moveTo(stroke[0].x, stroke[0].y)
+      const outline = []
+      const maxWidth = 4
+      const minWidth = maxWidth * 0.1
+      outline.push([stroke[0].x, stroke[0].y])
       for (let i = 1; i < stroke.length; i++) {
-        ctx.lineTo(stroke[i].x, stroke[i].y)
+        // this point
+        const x0 = stroke[i].x
+        const y0 = stroke[i].y
+        // previous point
+        const x1 = stroke[i - 1].x
+        const y1 = stroke[i - 1].y
+        // direction & magnitude
+        const dx = x1 - x0
+        const dy = y1 - y0
+        const magnatude = Math.sqrt((dx * dx) + (dy * dy))
+        // velocity with some
+        const t0 = stroke[i].t
+        const t1 = stroke[i - 1].t
+        let velocity = (t0 === t1) ? magnatude / t0 - t1 : 1
+        // Apply some cubic easing to the pressure
+        let p = stroke[i].p
+        p = p < 0.5 ? 4 * p * p * p : (p - 1) * (2 * p - 2) * (2 * p - 2) + 1
+        // normalize the vector based on pressure and velocity
+        const weight = Math.max(maxWidth / (velocity + 1) * p, minWidth)
+        const nx = dx * weight / magnatude
+        const ny = dy * weight / magnatude
+        // Use the normalized vector to find points
+        // perpendicular to the center line at the
+        // midpoint between it's two two points
+        const x2 = (x0 + x1) / 2 - ny
+        const y2 = (y0 + y1) / 2 + nx
+        const x3 = (x0 + x1) / 2 + ny
+        const y3 = (y0 + y1) / 2 - nx
+        // ctx.lineTo(x0, y0)
+        // ctx.moveTo(x2, y2)
+        // ctx.lineTo(x3, y3)
+        // ctx.moveTo(x0, y0)
+
+        outline.unshift([x2, y2])
+        outline.push([x3, y3])
+        if (i === stroke.length - 1) {
+          outline.push([x0, y0])
+        }
       }
-      ctx.stroke()
+      if (outline.length > 1) {
+        ctx.beginPath()
+        ctx.fillStyle = color
+        ctx.moveTo(outline[0][0], outline[0][1])
+        for (let i = 1; i < outline.length - 2; i++) {
+          var xc = (outline[i][0] + outline[i + 1][0]) / 2
+          var yc = (outline[i][1] + outline[i + 1][1]) / 2
+          ctx.quadraticCurveTo(outline[i][0], outline[i][1], xc, yc)
+        }
+        ctx.quadraticCurveTo(outline[1][0], outline[1][1], outline[0][0], outline[0][1])
+        ctx.fill()
+      }
     }
   }
 
   render () {
     return <div style={{position: 'relative', width: `${this.props.width}px`, height: `${this.props.height}px`}}>
-      <canvas style={{backgroundColor: '#ccc', position: 'absolute'}}
+      <canvas style={{backgroundColor: '#eee', position: 'absolute'}}
         ref={canvas => { this.oCanvas = canvas }}
         height={this.props.height}
         width={this.props.width}

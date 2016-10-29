@@ -5,19 +5,16 @@ import Timeline from '../../containers/Timeline'
 import AnimationController from '../../containers/AnimationController'
 import style from './screen.sass'
 
-import CanvasTest from '../../components/CanvasTest'
-
 const AppView = ({ animation, controls }) => (
   <div className={style.app}>
-    {/* <AnimationController /> */}
+    <AnimationController />
     <main>
-      {/* <Canvas width={animation.width} height={animation.height} /> */}
-      <CanvasTest />
+      <Canvas width={animation.width} height={animation.height} />
     </main>
-    {/* <nav>
+    <nav>
       <Controls />
       <Timeline />
-    </nav> */}
+    </nav>
   </div>
 )
 
