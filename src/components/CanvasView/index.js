@@ -1,5 +1,5 @@
 import React, { Component, PropTypes as T } from 'react'
-// import { BallpointPen } from '../../ploma'
+import { BallpointPen } from '../../ploma'
 
 class CanvasView extends Component {
 
@@ -16,16 +16,14 @@ class CanvasView extends Component {
     super(props)
     this.state = {
       isDrawing: false,
-      // strokes: [],
       currentStroke: []
     }
   }
 
   componentDidMount () {
+    this.ploma = new BallpointPen(this.oCanvas)
     this.iContext = this.iCanvas.getContext('2d')
     this.oContext = this.oCanvas.getContext('2d')
-    // this.ploma = new BallpointPen(this.canvas)
-    // this.ploma.setStrokes(this.state.strokes)
     this.iCanvas.addEventListener('pointerdown', this.downHandler)
     this.iCanvas.addEventListener('pointerup', this.upHandler)
     this.iCanvas.addEventListener('pointermove', this.moveHandler)
@@ -38,8 +36,11 @@ class CanvasView extends Component {
     this.setState({ isDrawing: false })
   }
 
+  // TODO: Separate these two so that we don't need to redraw the output
+  // while the input is changing.
   componentDidUpdate () {
-    this.draw()
+    this.drawOutput()
+    this.drawInput()
   }
 
   downHandler = (event) => {
@@ -50,7 +51,6 @@ class CanvasView extends Component {
       isDrawing: true,
       currentStroke: [{ x, y, p }]
     })
-    // this.ploma.beginStroke(x, y, p)
   }
 
   upHandler = (event) => {
@@ -60,14 +60,12 @@ class CanvasView extends Component {
     const stroke = [...this.state.currentStroke, { x, y, p }]
     this.setState({
       isDrawing: false,
-      // strokes: [...this.state.strokes, stroke],
       currentStroke: []
     }, () => {
       const { onCreateStroke, currentFrame, selectedLayer } = this.props
       onCreateStroke(stroke, currentFrame, selectedLayer)
       this.iContext.clearRect(0, 0, this.iCanvas.width, this.iCanvas.height)
     })
-    // this.ploma.endStroke(x, y, p)
   }
 
   moveHandler = (event) => {
@@ -78,11 +76,10 @@ class CanvasView extends Component {
       this.setState({
         currentStroke: [...this.state.currentStroke, { x, y, p }]
       })
-      // this.ploma.extendStroke(x, y, p)
     }
   }
 
-  draw () {
+  drawOutput () {
     this.oContext.clearRect(0, 0, this.oCanvas.width, this.oCanvas.height)
     const { layers, currentFrame } = this.props
     for (let i = 0; i < layers.length; i++) {
@@ -95,6 +92,10 @@ class CanvasView extends Component {
         }
       }
     }
+  }
+
+  drawInput () {
+    this.iContext.clearRect(0, 0, this.iCanvas.width, this.iCanvas.height)
     this.drawStroke(this.state.currentStroke, 'orange', this.iContext)
   }
 
