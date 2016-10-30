@@ -14,8 +14,13 @@
     overflow: scroll
 
   > nav
-    display: flex
     background-color: $mono-1
-    height: 20vh
-    min-height: 8em
     text-shadow: 0 1px 0 lighten($mono-0, 10%)
+
+    &.top
+      border-bottom: 1px solid darken($mono-1, 10%)
+
+    &.bottom
+      display: flex
+      height: 20vh
+      min-height: 8em

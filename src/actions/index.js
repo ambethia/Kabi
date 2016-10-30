@@ -23,13 +23,13 @@ export const createLayer = () => ({
   type: 'CREATE_LAYER'
 })
 
-export const selectLayer = (index) => ({
-  type: 'SELECT_LAYER',
+export const deleteLayer = (index) => ({
+  type: 'DELETE_LAYER',
   index
 })
 
-export const deleteLayer = (index) => ({
-  type: 'DELETE_LAYER',
+export const setLayer = (index) => ({
+  type: 'SET_LAYER',
   index
 })
 
@@ -48,4 +48,16 @@ export const createStroke = (stroke, frame, layer) => ({
   stroke,
   frame,
   layer
+})
+
+export const deleteStroke = (index, frame, layer) => ({
+  type: 'DELETE_STROKE',
+  index,
+  frame,
+  layer
+})
+
+export const setTool = (tool) => ({
+  type: 'SET_TOOL',
+  tool
 })

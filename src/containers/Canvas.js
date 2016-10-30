@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { createStroke } from '../actions'
+import { createStroke, deleteStroke } from '../actions'
 import CanvasView from '../components/CanvasView'
 
 const Canvas = connect(
@@ -7,11 +7,13 @@ const Canvas = connect(
     width: state.animation.width,
     height: state.animation.height,
     currentFrame: state.controls.currentFrame,
-    selectedLayer: state.controls.selectedLayer,
+    currentLayer: state.controls.currentLayer,
+    currentTool: state.controls.currentTool,
     layers: state.animation.layers
   }),
   dispatch => ({
-    onCreateStroke (stroke, frame, layer) { dispatch(createStroke(stroke, frame, layer)) }
+    onCreateStroke (stroke, frame, layer) { dispatch(createStroke(stroke, frame, layer)) },
+    onDeleteStroke (index, frame, layer) { dispatch(deleteStroke(index, frame, layer)) }
   })
 )(CanvasView)
 

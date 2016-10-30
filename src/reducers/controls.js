@@ -3,10 +3,11 @@ const initialState = {
   looping: false,
   ghosting: true,
   currentFrame: 1,
+  currentTool: 'brush',
+  currentLayer: 0,
   totalFrames: 64,
   loopFrom: 1,
-  loopTo: 8,
-  selectedLayer: 0
+  loopTo: 8
 }
 
 export default (state = initialState, action) => {
@@ -21,6 +22,10 @@ export default (state = initialState, action) => {
       return { ...state, ghosting: !state.ghosting }
     case 'SET_FRAME':
       return { ...state, currentFrame: action.frame }
+    case 'SET_LAYER':
+      return { ...state, currentLayer: action.layer }
+    case 'SET_TOOL':
+      return { ...state, currentTool: action.tool }
     default:
       return state
   }
