@@ -138,6 +138,7 @@ class CanvasView extends Component {
 
     if (stroke.length > 0) {
       const outline = []
+      // TODO: Refacter this when stroke point handling is converted from objects to arrays
       outline.push([stroke[0].x, stroke[0].y])
       for (let i = 1; i < stroke.length; i++) {
         // this point
@@ -168,6 +169,7 @@ class CanvasView extends Component {
         const y2 = (y0 + y1) / 2 + nx
         const x3 = (x0 + x1) / 2 + ny
         const y3 = (y0 + y1) / 2 - nx
+        // TODO: Refactor to use pre-allocated array rather than resizing for every point.
         outline.unshift([x2, y2])
         outline.push([x3, y3])
         if (i === stroke.length - 1) {
@@ -199,8 +201,9 @@ class CanvasView extends Component {
         // Don't recheck strokes we've already tagged.
         if (!erasedStrokes.includes(i)) {
           const stroke = cel.strokes[i]
-          const strokeBounds = this.boundsForStroke(stroke) // TODO: Cache these when updated
-          if (this.boundsDoIntersect(eraserBounds, strokeBounds)) {
+          // TODO: Cache these when updated
+          const strokeBounds = this.boundsForStroke(stroke)
+          if (this.boundsDoIntersect(...eraserBounds, ...strokeBounds)) {
             // Tag this stroke for erasure if they really intersect
             if (this.doLinesIntersect(stroke, currentStroke)) {
               // NOTE: It's possible this could end up adding the same stroke twice... is that a problem?
@@ -212,6 +215,7 @@ class CanvasView extends Component {
     }
   }
 
+  // TODO: Move this to utility module (Similar function in Animation reducer)
   celForLayer (index) {
     const {layers, currentFrame} = this.props
     if (layers[index]) {
@@ -221,6 +225,7 @@ class CanvasView extends Component {
     }
   }
 
+  // TODO: Refacter `boundsForStroke` when stroke point handling is converted from objects to arrays
   boundsForStroke (stroke) {
     const length = stroke.length
     if (length === 0) return []
@@ -236,71 +241,34 @@ class CanvasView extends Component {
     return [lo.x, lo.y, hi.x, hi.y]
   }
 
-  boundsDoIntersect (a, b) {
-    return a[2] > b[0] && a[0] < b[2] && a[3] > b[1] && a[1] < b[3]
-  }
-
-  doLineSegmentsIntersect (a, b) {
-    function linesIntersect (seg1, seg2, precision) {
-      var x1 = seg1[0][0],
-        y1 = seg1[0][1],
-        x2 = seg1[1][0],
-        y2 = seg1[1][1],
-        x3 = seg2[0][0],
-        y3 = seg2[0][1],
-        x4 = seg2[1][0],
-        y4 = seg2[1][1],
-        x, y, result = false,
-        p = precision || 6,
-        denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
-      if (denominator === 0) {
-        // check both segments are Coincident, we already know
-        // that these two are parallel
-        if (fix((y3 - y1) * (x2 - x1), p) === fix((y2 - y1) * (x3 - x1), p)) {
-          // second segment any end point lies on first segment
-          result = intPtOnSegment(x3, y3, x1, y1, x2, y2, p) ||
-        intPtOnSegment(x4, y4, x1, y1, x2, y2, p)
-        }
-      } else {
-        x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denominator
-        y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denominator
-        // check int point (x,y) lies on both segment
-        result = intPtOnSegment(x, y, x1, y1, x2, y2, p) && intPtOnSegment(x, y, x3, y3, x4, y4, p)
-      }
-      return result
-    }
-
-    function intPtOnSegment (x, y, x1, y1, x2, y2, p) {
-      return fix(Math.min(x1, x2), p) <= fix(x, p) && fix(x, p) <= fix(Math.max(x1, x2), p) && fix(Math.min(y1, y2), p) <= fix(y, p) && fix(y, p) <= fix(Math.max(y1, y2), p)
-    }
-
-    // fix to the precision
-    function fix (n, p) {
-      return parseInt(n * Math.pow(10, p))
-    }
-    return linesIntersect(a, b)
-  }
-
+  // TODO: Refacter `doLinesIntersect` when stroke point handling is converted from objects to arrays
   doLinesIntersect (a, b) {
     for (let i = 1; i < a.length; i++) {
       for (let j = 1; j < b.length; j++) {
         if (b[j]) {
-          let c = [[a[i - 1].x, a[i - 1].y], [a[i].x, a[i].y]]
-          let d = [[b[j - 1].x, b[j - 1].y], [b[j].x, b[j].y]]
-          if (this.doLineSegmentsIntersect(c, d)) return true
+          if (this.doLineSegmentsIntersect(
+            a[i - 1].x, a[i - 1].y, a[i].x, a[i].y,
+            b[j - 1].x, b[j - 1].y, b[j].x, b[j].y
+          )) return true
         }
       }
     }
   }
 
-  linesDoIntersect (p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y) {
-    const s1x = p1x - p0x
-    const s1y = p1y - p0y
-    const s2x = p3x - p2x
-    const s2y = p3y - p2y
-    const s = (-s1y * (p0x - p2x) + s1x * (p0y - p2y)) / (-s2x * s1y + s1x * s2y)
-    const t = (s2x * (p0y - p2y) - s2y * (p0x - p2x)) / (-s2x * s1y + s1x * s2y)
-    return s >= 0 && s <= 1 && t >= 0 && t <= 1
+  // Test if a box from AB intersects with one from CD
+  boundsDoIntersect (Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
+    return Bx > Cx && Ax < Dx && By > Cy && Ay < Dy
+  }
+
+  // Test if segments AB and CD intersect
+  doLineSegmentsIntersect (Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
+    const Sx = Bx - Ax
+    const Sy = By - Ay
+    const Tx = Dx - Cx
+    const Ty = Dy - Cy
+    const u = (-Sy * (Ax - Cx) + Sx * (Ay - Cy)) / (-Tx * Sy + Sx * Ty)
+    const v = (Tx * (Ay - Cy) - Ty * (Ax - Cx)) / (-Tx * Sy + Sx * Ty)
+    return u >= 0 && u <= 1 && v >= 0 && v <= 1
   }
 
   render () {
