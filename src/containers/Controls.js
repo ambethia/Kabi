@@ -15,7 +15,7 @@ const Controls = connect(
       onTogglePlayback () { dispatch(togglePlayback()) },
       onToggleLooping () { dispatch(toggleLooping()) },
       onToggleGhosting () { dispatch(toggleGhosting()) },
-      onCreateLayer () { dispatch(createLayer()) },
+      onCreateLayer (count) { dispatch(createLayer(count)) },
       onDeleteLayer (index) { dispatch(deleteLayer(index)) },
       onSetLayer (index) { dispatch(setLayer(index)) }
     }

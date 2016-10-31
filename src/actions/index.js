@@ -19,8 +19,9 @@ export const setFrame = (frame) => ({
   frame
 })
 
-export const createLayer = () => ({
-  type: 'CREATE_LAYER'
+export const createLayer = (count) => ({
+  type: 'CREATE_LAYER',
+  count
 })
 
 export const deleteLayer = (index) => ({

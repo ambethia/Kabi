@@ -9,7 +9,7 @@ const ControlsView = ({ controls, animation, actions }) => (
       <div className={style.layerControls}>
         <IconButton
           glyph='add'
-          onClick={actions.onCreateLayer}
+          onClick={() => actions.onCreateLayer(animation.layers.length)}
         />
         <IconButton
           glyph='trash'
