@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
     case 'SET_FRAME':
       return { ...state, currentFrame: action.frame }
     case 'SET_LAYER':
-      return { ...state, currentLayer: action.layer }
+      return { ...state, currentLayer: action.index }
     case 'SET_TOOL':
       return { ...state, currentTool: action.tool }
     default:

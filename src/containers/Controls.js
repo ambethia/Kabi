@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-import { togglePlayback, toggleLooping, toggleGhosting } from '../actions'
+import {
+  togglePlayback, toggleLooping, toggleGhosting,
+  createLayer, deleteLayer, setLayer
+} from '../actions'
 import ControlsView from '../components/ControlsView'
 
 const Controls = connect(
@@ -11,7 +14,10 @@ const Controls = connect(
     actions: {
       onTogglePlayback () { dispatch(togglePlayback()) },
       onToggleLooping () { dispatch(toggleLooping()) },
-      onToggleGhosting () { dispatch(toggleGhosting()) }
+      onToggleGhosting () { dispatch(toggleGhosting()) },
+      onCreateLayer () { dispatch(createLayer()) },
+      onDeleteLayer (index) { dispatch(deleteLayer(index)) },
+      onSetLayer (index) { dispatch(setLayer(index)) }
     }
   })
 )(ControlsView)

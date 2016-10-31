@@ -1,15 +1,9 @@
-const initialState = {
-  fps: 24,
-  width: 1922 / 2,
-  height: 1080 / 2,
-  backgroundColor: '#ccc',
-  layers: [{
-    name: 'Layer 1',
-    color: '#333',
-    visible: true,
-    ghosted: false,
-    cels: []
-  }]
+const newLayer = {
+  name: 'Layer 1',
+  color: '#333',
+  visible: true,
+  ghosted: false,
+  cels: []
 }
 
 const newCell = {
@@ -17,6 +11,16 @@ const newCell = {
   from: 1,
   to: 1,
   strokes: []
+}
+
+const initialState = {
+  fps: 24,
+  width: 1922 / 2,
+  height: 1080 / 2,
+  backgroundColor: '#ccc',
+  layers: [
+    Object.assign({}, newLayer)
+  ]
 }
 
 // TODO: Figure out nested reducers (for layers -> cels -> strokes)
@@ -76,6 +80,25 @@ export default (state = initialState, action) => {
             ]
           },
           ...state.layers.slice(action.layer + 1)
+        ]
+      }
+    case 'CREATE_LAYER':
+      const n = state.layers.length + 1
+      return {
+        ...state,
+        layers: [
+          ...state.layers,
+          Object.assign({}, newLayer, {
+            name: `Layer ${n}`
+          })
+        ]
+      }
+    case 'DELETE_LAYER':
+      return {
+        ...state,
+        layers: [
+          ...state.layers.slice(0, action.index),
+          ...state.layers.slice(action.index + 1)
         ]
       }
     default:

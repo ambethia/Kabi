@@ -7,8 +7,14 @@ const ControlsView = ({ controls, animation, actions }) => (
   <div className={style.controls}>
     <header>
       <div className={style.layerControls}>
-        <IconButton glyph='add' />
-        <IconButton glyph='trash' />
+        <IconButton
+          glyph='add'
+          onClick={actions.onCreateLayer}
+        />
+        <IconButton
+          glyph='trash'
+          onClick={() => actions.onDeleteLayer(controls.currentLayer)}
+        />
       </div>
       <div className={style.playbackControls}>
         <IconButton
@@ -30,7 +36,12 @@ const ControlsView = ({ controls, animation, actions }) => (
     </header>
     <ul className={style.layers}>
       {animation.layers.map((layer, i) => (
-        <LayerView {...layer} key={i} />
+        <LayerView
+          {...layer}
+          current={controls.currentLayer === i}
+          onSetLayer={() => actions.onSetLayer(i)}
+          key={i}
+        />
       ))}
     </ul>
   </div>
