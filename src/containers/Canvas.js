@@ -6,10 +6,8 @@ const Canvas = connect(
   state => ({
     width: state.animation.width,
     height: state.animation.height,
-    currentFrame: state.controls.currentFrame,
-    currentLayer: state.controls.currentLayer,
-    currentTool: state.controls.currentTool,
-    layers: state.animation.layers
+    layers: state.animation.layers,
+    ...state.controls
   }),
   dispatch => ({
     onCreateStroke (stroke, frame, layer) { dispatch(createStroke(stroke, frame, layer)) },

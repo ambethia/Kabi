@@ -1,13 +1,22 @@
 import React, { Component, PropTypes as T } from 'react'
+import { findCel } from '../../utility'
 
+// TODO: Refactor this component, moving the brush and eraser
+// code to separate modules as well as, possibly, a separate
+// rendering class for drawing.
 class CanvasView extends Component {
 
   static propTypes = {
     height: T.number.isRequired,
     width: T.number.isRequired,
+    ghosting: T.bool.isRequired,
+    looping: T.bool.isRequired,
+    loopFrom: T.number.isRequired,
+    loopTo: T.number.isRequired,
     currentFrame: T.number.isRequired,
     currentLayer: T.number.isRequired,
     currentTool: T.string.isRequired,
+    totalFrames: T.number.isRequired,
     layers: T.array.isRequired,
     onCreateStroke: T.func.isRequired,
     onDeleteStroke: T.func.isRequired
@@ -103,15 +112,47 @@ class CanvasView extends Component {
   }
 
   drawOutput () {
+    const GHOST_FRAMES = 2
+    const {
+      layers, currentLayer, currentFrame, totalFrames,
+      ghosting, looping, loopFrom, loopTo
+    } = this.props
+    const frames = [currentFrame]
+    if (ghosting) {
+      for (let i = 1; i <= GHOST_FRAMES; i++) {
+        let left = currentFrame - i
+        let right = currentFrame + i
+        if (looping && currentFrame >= loopFrom && currentFrame <= loopTo) {
+          if (left < loopFrom) left = loopTo + left
+          if (right > loopTo) right = right - loopTo
+        }
+        frames.unshift(left)
+        frames.push(right)
+      }
+    }
     this.oContext.clearRect(0, 0, this.oCanvas.width, this.oCanvas.height)
-    const { layers, currentLayer } = this.props
-    for (let i = 0; i < layers.length; i++) {
-      const cel = this.celForLayer(i)
-      if (cel) {
-        for (let j = 0; j < cel.strokes.length; j++) {
-          const erased = i === currentLayer && this.state.erasedStrokes.includes(j)
-          const color = erased ? '#900' : layers[i].color
-          this.drawStroke(cel.strokes[j], color, this.oContext)
+    for (let i = 0; i < frames.length; i++) {
+      const frame = frames[i]
+      if (frame > 0 && frame <= totalFrames) {
+        for (let j = 0; j < layers.length; j++) {
+          const layer = layers[j]
+          const cel = findCel(layers, j, frame)
+          if (cel) {
+            for (let k = 0; k < cel.strokes.length; k++) {
+              const isCurrentFrame = frame === currentFrame
+              const isCurrentLayer = j === currentLayer
+              const color = (() => {
+                if (isCurrentFrame && isCurrentLayer && this.state.erasedStrokes.includes(k)) return '#900'
+                if (isCurrentFrame) return layer.color
+                const mid = frames.length / 2
+                const opacity = 1 - (1 / Math.round(mid) * Math.abs(i - Math.floor(mid)))
+                const hue = i > mid ? 128 : 0
+                const kolor = `hsla(${hue},75%,75%,${opacity})`
+                return kolor
+              })()
+              this.drawStroke(cel.strokes[k], color, this.oContext)
+            }
+          }
         }
       }
     }
@@ -135,7 +176,6 @@ class CanvasView extends Component {
   drawStroke (stroke, color, ctx) {
     const maxWidth = 4 // TODO configurable brush size
     const minWidth = maxWidth * 0.1
-
     if (stroke.length > 0) {
       const outline = []
       // TODO: Refacter this when stroke point handling is converted from objects to arrays
@@ -192,8 +232,8 @@ class CanvasView extends Component {
   }
 
   eraseStrokes () {
-    const { currentLayer } = this.props
-    const cel = this.celForLayer(currentLayer)
+    const { layers, currentLayer, currentFrame } = this.props
+    const cel = findCel(layers, currentLayer, currentFrame)
     if (cel) {
       const { currentStroke, erasedStrokes } = this.state
       const eraserBounds = this.boundsForStroke(currentStroke)
@@ -212,16 +252,6 @@ class CanvasView extends Component {
           }
         }
       }
-    }
-  }
-
-  // TODO: Move this to utility module (Similar function in Animation reducer)
-  celForLayer (index) {
-    const {layers, currentFrame} = this.props
-    if (layers[index]) {
-      return layers[index].cels.find((cel) => (
-        cel.from <= currentFrame && currentFrame <= cel.to
-      ))
     }
   }
 
