@@ -2,7 +2,7 @@ const newLayer = {
   name: 'Layer 1',
   color: '#333',
   visible: true,
-  ghosted: false,
+  ghosted: true,
   cels: []
 }
 
@@ -94,10 +94,39 @@ export default (state = initialState, action) => {
         ]
       }
     case 'DELETE_LAYER':
+      if (state.layers.length > 1) {
+        return {
+          ...state,
+          layers: [
+            ...state.layers.slice(0, action.index),
+            ...state.layers.slice(action.index + 1)
+          ]
+        }
+      } else {
+        // Don't remove the last layer.
+        return state
+      }
+    case 'TOGGLE_LAYER_VISIBILITY':
       return {
         ...state,
         layers: [
           ...state.layers.slice(0, action.index),
+          {
+            ...state.layers[action.index],
+            visible: !state.layers[action.index].visible
+          },
+          ...state.layers.slice(action.index + 1)
+        ]
+      }
+    case 'TOGGLE_LAYER_GHOSTING':
+      return {
+        ...state,
+        layers: [
+          ...state.layers.slice(0, action.index),
+          {
+            ...state.layers[action.index],
+            ghosted: !state.layers[action.index].ghosted
+          },
           ...state.layers.slice(action.index + 1)
         ]
       }

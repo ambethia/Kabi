@@ -135,22 +135,25 @@ class CanvasView extends Component {
       const frame = frames[i]
       if (frame > 0 && frame <= totalFrames) {
         for (let j = 0; j < layers.length; j++) {
+          const isCurrentFrame = frame === currentFrame
+          const isCurrentLayer = j === currentLayer
           const layer = layers[j]
-          const cel = findCel(layers, j, frame)
-          if (cel) {
-            for (let k = 0; k < cel.strokes.length; k++) {
-              const isCurrentFrame = frame === currentFrame
-              const isCurrentLayer = j === currentLayer
+          if (layer.visible && (isCurrentFrame || layer.ghosted)) {
+            const cel = findCel(layers, j, frame)
+            if (cel) {
               const color = (() => {
-                if (isCurrentFrame && isCurrentLayer && this.state.erasedStrokes.includes(k)) return '#900'
                 if (isCurrentFrame) return layer.color
                 const mid = frames.length / 2
                 const opacity = 1 - (1 / Math.round(mid) * Math.abs(i - Math.floor(mid)))
                 const hue = i > mid ? 128 : 0
-                const kolor = `hsla(${hue},75%,75%,${opacity})`
-                return kolor
+                return `hsla(${hue},75%,75%,${opacity})`
               })()
-              this.drawStroke(cel.strokes[k], color, this.oContext)
+              for (let k = 0; k < cel.strokes.length; k++) {
+                const isErased = isCurrentFrame &&
+                                 isCurrentLayer &&
+                                 this.state.erasedStrokes.includes(k)
+                this.drawStroke(cel.strokes[k], isErased ? '#900' : color, this.oContext)
+              }
             }
           }
         }

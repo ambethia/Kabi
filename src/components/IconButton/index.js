@@ -22,13 +22,17 @@ const IconButton = ({
   active = false,
   width = 16,
   height = 16,
+  type,
   onClick
 }) => {
   const handleClick = (event) => {
     event.preventDefault()
     if (!disabled && onClick) onClick()
   }
-  return <button onClick={handleClick} className={cx('icon', { disabled, active })}>
+  return <button
+    onClick={handleClick}
+    className={cx('icon', type, { disabled, active })}
+  >
     <img src={ICONS[glyph]} width={width} height={height} />
   </button>
 }
@@ -39,6 +43,7 @@ IconButton.propTypes = {
   disabled: T.bool,
   width: T.number,
   height: T.number,
+  type: T.string,
   onClick: T.func
 }
 

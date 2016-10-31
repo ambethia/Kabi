@@ -13,6 +13,7 @@ const ControlsView = ({ controls, animation, actions }) => (
         />
         <IconButton
           glyph='trash'
+          disabled={animation.layers.length <= 1}
           onClick={() => actions.onDeleteLayer(controls.currentLayer)}
         />
       </div>
@@ -40,6 +41,8 @@ const ControlsView = ({ controls, animation, actions }) => (
           {...layer}
           current={controls.currentLayer === i}
           onSetLayer={() => actions.onSetLayer(i)}
+          onToggleVisibilty={() => actions.onToggleLayerVisibility(i)}
+          onToggleGhosting={() => actions.onToggleLayerGhosting(i)}
           key={i}
         />
       ))}

@@ -26,6 +26,8 @@ export default (state = initialState, action) => {
       return { ...state, currentLayer: action.index }
     case 'CREATE_LAYER':
       return { ...state, currentLayer: action.count }
+    case 'DELETE_LAYER':
+      return { ...state, currentLayer: 0 }
     case 'SET_TOOL':
       return { ...state, currentTool: action.tool }
     default:
