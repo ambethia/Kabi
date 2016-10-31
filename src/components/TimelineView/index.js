@@ -28,9 +28,11 @@ const TimelineView = ({ controls, animation, onSetFrame }) => (
   </div>
 )
 
+// TODO: Break these out explicitly, dont just pass in `controls` and `animation`
 TimelineView.propTypes = {
   controls: T.object.isRequired,
-  animation: T.object.isRequired
+  animation: T.object.isRequired,
+  onSetFrame: T.func
 }
 
 export default TimelineView

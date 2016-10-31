@@ -28,7 +28,6 @@ const IconButton = ({
     event.preventDefault()
     if (!disabled && onClick) onClick()
   }
-
   return <button onClick={handleClick} className={cx('icon', { disabled, active })}>
     <img src={ICONS[glyph]} width={width} height={height} />
   </button>

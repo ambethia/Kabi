@@ -6,10 +6,17 @@ const initialState = {
   layers: [{
     name: 'Layer 1',
     color: '#333',
-    cels: [],
     visible: true,
-    ghosted: false
+    ghosted: false,
+    cels: []
   }]
+}
+
+const newCell = {
+  key: false,
+  from: 1,
+  to: 1,
+  strokes: []
 }
 
 // TODO: Figure out nested reducers (for layers -> cels -> strokes)
@@ -20,12 +27,10 @@ export default (state = initialState, action) => {
     index = layer.cels.findIndex((cel) => {
       return cel.from <= action.frame && action.frame <= cel.to
     })
-    cel = layer.cels[index] || {
-      key: false,
+    cel = layer.cels[index] || Object.assign({}, newCell, {
       from: action.frame,
-      to: action.frame,
-      strokes: []
-    }
+      to: action.frame
+    })
   }
 
   switch (action.type) {

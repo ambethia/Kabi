@@ -2,15 +2,20 @@
 
 Proposed schema for application state:
 
+The `animation` part of the state is probably suitable for serializing into files.
+
 ```
 {
   controls: {
     playing: Boolean,
     looping: Boolean,
+    ghosting: Boolean,
     currentFrame: Integer,
+    currentTool: String,
+    currentLayer: Integer,
+    totalFrames: Integer,
     loopFrom: Integer,
-    loopTo: Integer,
-    ghosting: Boolean
+    loopTo: Integer
   },
   animation: {
     fps: Float,
@@ -21,20 +26,20 @@ Proposed schema for application state:
       {
         name: String,
         color: String,
+        visible: Boolean,
+        ghosted: Boolean,
         cels: [
           {
             key: Boolean,
             from: Integer,
             to: Integer,
             strokes: [
-              [x:Integer, y:Integer, pressure:Float],
+              [x:Integer, y:Integer, p:Float, t:Integer],
               ...
             ]
           },
           ...
-        ],
-        visible: Boolean,
-        ghosted: Boolean
+        ]
       },
       ...
     ]

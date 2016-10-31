@@ -17,10 +17,9 @@ const frameStyle = (position, length) => {
 const LayerView = ({ name, color, visible = false, ghosted = false, cels = [] }) => (
   <li className={style.layer}>
     <div className={style.frames}>
-      <div className={style.frame} style={frameStyle(1, 1)} />
-      <div className={style.frame} style={frameStyle(2, 2)} />
-      <div className={style.frame} style={frameStyle(4, 3)} />
-      <div className={style.frame} style={frameStyle(7, 4)} />
+      {cels.map((cel, i) => {
+        return <div className={style.frame} style={frameStyle(cel.from, cel.to - cel.from + 1)} key={i} />
+      })}
     </div>
   </li>
 )
@@ -30,7 +29,7 @@ LayerView.propTypes = {
   color: T.string.isRequired,
   visible: T.bool,
   ghosted: T.bool,
-  cels: T.array
+  cels: T.array.isRequired
 }
 
 export default LayerView
