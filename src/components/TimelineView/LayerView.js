@@ -14,11 +14,16 @@ const frameStyle = (position, length) => {
   return { left, width }
 }
 
-const LayerView = ({ name, color, visible = false, ghosted = false, cels = [] }) => (
+const LayerView = ({ name, color, visible = false, ghosted = false, cels = [], onClickCel }) => (
   <li className={style.layer}>
     <div className={style.frames}>
       {cels.map((cel, i) => {
-        return <div className={style.frame} style={frameStyle(cel.from, cel.to - cel.from + 1)} key={i} />
+        return <div
+          className={style.frame}
+          style={frameStyle(cel.from, cel.to - cel.from + 1)}
+          onClick={() => onClickCel(cel.from)}
+          key={i}
+        />
       })}
     </div>
   </li>
@@ -29,7 +34,8 @@ LayerView.propTypes = {
   color: T.string.isRequired,
   visible: T.bool,
   ghosted: T.bool,
-  cels: T.array.isRequired
+  cels: T.array.isRequired,
+  onClickCel: T.func
 }
 
 export default LayerView

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setFrame } from '../actions'
+import { setFrame, setLayer } from '../actions'
 import TimelineView from '../components/TimelineView'
 
 const Timeline = connect(
@@ -8,7 +8,11 @@ const Timeline = connect(
     animation: { ...state.animation }
   }),
   dispatch => ({
-    onSetFrame (frame) { dispatch(setFrame(frame)) }
+    onSetFrame (frame) { dispatch(setFrame(frame)) },
+    onSetFrameAndLayer (frame, layer) {
+      dispatch(setFrame(frame))
+      dispatch(setLayer(layer))
+    }
   })
 )(TimelineView)
 

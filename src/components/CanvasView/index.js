@@ -9,6 +9,7 @@ class CanvasView extends Component {
   static propTypes = {
     height: T.number.isRequired,
     width: T.number.isRequired,
+    playing: T.bool.isRequired,
     ghosting: T.bool.isRequired,
     looping: T.bool.isRequired,
     loopFrom: T.number.isRequired,
@@ -114,11 +115,11 @@ class CanvasView extends Component {
   drawOutput () {
     const GHOST_FRAMES = 2
     const {
-      layers, currentLayer, currentFrame, totalFrames,
+      playing, layers, currentLayer, currentFrame, totalFrames,
       ghosting, looping, loopFrom, loopTo
     } = this.props
     const frames = [currentFrame]
-    if (ghosting) {
+    if (ghosting && !playing) {
       for (let i = 1; i <= GHOST_FRAMES; i++) {
         let left = currentFrame - i
         let right = currentFrame + i

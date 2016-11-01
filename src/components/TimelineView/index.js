@@ -5,7 +5,7 @@ import style from './screen.sass'
 
 const cx = classNames.bind(style)
 
-const TimelineView = ({ controls, animation, onSetFrame }) => (
+const TimelineView = ({ controls, animation, onSetFrame, onSetFrameAndLayer }) => (
   <div className={style.timeline}>
     <header style={{width: `calc(1.5em * ${controls.totalFrames})`}}>
       {[...Array(controls.totalFrames).keys()].map((i) => (
@@ -22,7 +22,7 @@ const TimelineView = ({ controls, animation, onSetFrame }) => (
     </header>
     <ul className={style.layers} style={{width: `calc(1.5em * ${controls.totalFrames})`}}>
       {animation.layers.map((layer, i) => (
-        <LayerView {...layer} key={i} />
+        <LayerView {...layer} key={i} onClickCel={(cel) => onSetFrameAndLayer(cel, i)} />
       ))}
     </ul>
   </div>
@@ -32,7 +32,8 @@ const TimelineView = ({ controls, animation, onSetFrame }) => (
 TimelineView.propTypes = {
   controls: T.object.isRequired,
   animation: T.object.isRequired,
-  onSetFrame: T.func
+  onSetFrame: T.func,
+  onSetFrameAndLayer: T.func
 }
 
 export default TimelineView
