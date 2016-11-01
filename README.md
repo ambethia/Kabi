@@ -1,54 +1,43 @@
 # Kabi
 
-Proposed schema for application state:
+An app for sketching simple frame-by-frame animations.
 
-The `animation` part of the state is probably suitable for serializing into files.
+## Features
 
-```
-{
-  controls: {
-    playing: Boolean,
-    looping: Boolean,
-    ghosting: Boolean,
-    currentFrame: Integer,
-    currentTool: String,
-    currentLayer: Integer,
-    totalFrames: Integer,
-    loopFrom: Integer,
-    loopTo: Integer
-  },
-  animation: {
-    fps: Float,
-    width: Integer,
-    height: Integer,
-    backgroundColor: String,
-    layers: [
-      {
-        name: String,
-        color: String,
-        visible: Boolean,
-        ghosted: Boolean,
-        cels: [
-          {
-            key: Boolean,
-            from: Integer,
-            to: Integer,
-            strokes: [
-              [x:Integer, y:Integer, p:Float, t:Integer],
-              ...
-            ]
-          },
-          ...
-        ]
-      },
-      ...
-    ]
-  }
-}
-```
+- Pressure sensitive (in Chrome 54+) sketching tool
+- Eraser tool (removes full strokes)
+- Layers, with choosable color per layer
+- Toggle visibility of layers
+- Ghosting/Onion Skinning (per layer control)
+- Looping playback (partially implemented)
 
-Other parts of state for later revisions:
+## Planned Features
 
+- Saving and loading of animation
+- Adjust looping range (currently fixed to 1-8)
+- User defined FPS/timing
+- Keyboard shortcuts for tool switching and navigating timeline/layers
+- Export rendered animation as a series of images or animated gif
+- Standalone Electron app
+- Persistence to cloud storage (for authenticated web users)
+- Persistence to local storage (for anonymous web users)
+- Persistence to file (for desktop users)
+- Adjustable range of ghosted frames (current fixed to +/- 2)
+- Adjustable canvas size
+- Adjustable brush size
+- Vertical resize of bottom timeline/controls
 - Zoom in and out of canvas
 - Pan around canvas (useful while zoomed)
 - Rotation, to draw on canvas at different angles
+- Trim eraser (don't erased full stroke, only erase up to the next intersecting stroke)
+- Standard eraser (don't erase full stroke, only the portion covered by eraser, maybe just by splitting segments)
+- Adjust duration of cels by dragging handles that appear on hover
+- Move cels between frames and layers with drag and drop
+- Sharing, e.g. Imgur, Instagram, etc.
+
+## Known Issues
+
+- Duration of timeline should extend dynamically (fixed to 64)
+- Erasing all of the strokes in a given frame should remove the cel from the timeline.
+- Relies exclusively on `PointerEvent`, should refactor to fall back to `MouseEvent`
+- Redux dev tools seem to seriously affect performance

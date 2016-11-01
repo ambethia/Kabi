@@ -50,7 +50,7 @@ class ModalView extends Component {
           )}
         </div>
         <div className={style.controls}>
-          {/* <button>Cancel</button> */}
+          <button onClick={this.props.onDismiss}>Cancel</button>
           <button onClick={this.handleClick}>OK</button>
         </div>
       </div>
