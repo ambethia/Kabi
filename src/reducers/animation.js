@@ -1,6 +1,6 @@
 const newLayer = {
   name: 'Layer 1',
-  color: '#333',
+  color: 'hsla(220,13%,18%,1)',
   visible: true,
   ghosted: true,
   cels: []
@@ -126,6 +126,19 @@ export default (state = initialState, action) => {
           {
             ...state.layers[action.index],
             ghosted: !state.layers[action.index].ghosted
+          },
+          ...state.layers.slice(action.index + 1)
+        ]
+      }
+    case 'UPDATE_LAYER':
+      return {
+        ...state,
+        layers: [
+          ...state.layers.slice(0, action.index),
+          {
+            ...state.layers[action.index],
+            name: action.name,
+            color: action.color
           },
           ...state.layers.slice(action.index + 1)
         ]

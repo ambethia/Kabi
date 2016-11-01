@@ -7,6 +7,7 @@ const cx = classNames.bind(style)
 const ICONS = {
   add: require('./Add.svg'),
   brush: require('./Brush.svg'),
+  cross: require('./Cross.svg'),
   eraser: require('./Eraser.svg'),
   eye: require('./Eye.svg'),
   ghost: require('./Ghost.svg'),

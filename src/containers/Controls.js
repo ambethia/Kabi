@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import {
   togglePlayback, toggleLooping, toggleGhosting,
-  createLayer, deleteLayer, setLayer,
+  createLayer, deleteLayer, setLayer, openModal,
   toggleLayerGhosting, toggleLayerVisibility
 } from '../actions'
 import ControlsView from '../components/ControlsView'
@@ -19,6 +19,7 @@ const Controls = connect(
       onCreateLayer (count) { dispatch(createLayer(count)) },
       onDeleteLayer (index) { dispatch(deleteLayer(index)) },
       onSetLayer (index) { dispatch(setLayer(index)) },
+      onEditLayer (index) { dispatch(openModal('editLayer', { index })) },
       onToggleLayerGhosting (index) { dispatch(toggleLayerGhosting(index)) },
       onToggleLayerVisibility (index) { dispatch(toggleLayerVisibility(index)) }
     }

@@ -3,6 +3,7 @@ import Canvas from '../../containers/Canvas'
 import Controls from '../../containers/Controls'
 import Timeline from '../../containers/Timeline'
 import Toolbar from '../../containers/Toolbar'
+import Modal from '../../containers/Modal'
 import AnimationController from '../../containers/AnimationController'
 import style from './screen.sass'
 
@@ -19,6 +20,7 @@ const AppView = ({ animation, controls }) => (
       <Controls />
       <Timeline />
     </nav>
+    <Modal />
   </div>
 )
 

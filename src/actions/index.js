@@ -34,6 +34,13 @@ export const setLayer = (index) => ({
   index
 })
 
+export const updateLayer = (index, name, color) => ({
+  type: 'UPDATE_LAYER',
+  index,
+  name,
+  color
+})
+
 export const toggleLayerVisibility = (index) => ({
   type: 'TOGGLE_LAYER_VISIBILITY',
   index
@@ -61,4 +68,14 @@ export const deleteStroke = (index, frame, layer) => ({
 export const setTool = (tool) => ({
   type: 'SET_TOOL',
   tool
+})
+
+export const openModal = (name, data) => ({
+  type: 'OPEN_MODAL',
+  name,
+  data
+})
+
+export const closeModal = () => ({
+  type: 'CLOSE_MODAL'
 })

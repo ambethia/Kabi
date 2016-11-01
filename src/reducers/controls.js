@@ -7,7 +7,8 @@ const initialState = {
   currentLayer: 0,
   totalFrames: 64,
   loopFrom: 1,
-  loopTo: 8
+  loopTo: 8,
+  modalData: {}
 }
 
 export default (state = initialState, action) => {
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
       return { ...state, currentLayer: 0 }
     case 'SET_TOOL':
       return { ...state, currentTool: action.tool }
+    case 'OPEN_MODAL':
+      const { name, data } = action
+      return { ...state, modalData: { name, data } }
+    case 'CLOSE_MODAL':
+      return { ...state, modalData: {} }
     default:
       return state
   }

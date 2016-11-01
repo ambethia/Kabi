@@ -41,6 +41,7 @@ const ControlsView = ({ controls, animation, actions }) => (
           {...layer}
           current={controls.currentLayer === i}
           onSetLayer={() => actions.onSetLayer(i)}
+          onEditLayer={() => actions.onEditLayer(i)}
           onToggleVisibilty={() => actions.onToggleLayerVisibility(i)}
           onToggleGhosting={() => actions.onToggleLayerGhosting(i)}
           key={i}
