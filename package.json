@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "deploy": "surge ./public",
+    "deploy": "surge --domain kabi.surge.sh ./public",
     "start": "webpack-dev-server",
     "build": "rm -rf public && NODE_ENV=production webpack --optimize-minimize --progress --profile --colors"
   },

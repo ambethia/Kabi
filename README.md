@@ -33,11 +33,14 @@ An app for sketching simple frame-by-frame animations.
 - Standard eraser (don't erase full stroke, only the portion covered by eraser, maybe just by splitting segments)
 - Adjust duration of cels by dragging handles that appear on hover
 - Move cels between frames and layers with drag and drop
+- Easy timeline scrubbing (click and drag playhead marker back and forth)
+- Audio loading, playback, and waveform visualization
 - Sharing, e.g. Imgur, Instagram, etc.
 
 ## Known Issues
 
 - Duration of timeline should extend dynamically (fixed to 64)
+- Current layer should render on top of all ghosted layers (current it's between past and future layers)
 - Erasing all of the strokes in a given frame should remove the cel from the timeline.
 - Relies exclusively on `PointerEvent`, should refactor to fall back to `MouseEvent`
 - Redux dev tools seem to seriously affect performance
