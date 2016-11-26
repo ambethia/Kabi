@@ -17,6 +17,7 @@
       flex: 0 0 $frame-width
       text-align: center
       transition: all 200ms ease-out
+      position: relative
 
       span
         font-size: 0.8em
@@ -29,6 +30,28 @@
         transition: all 10ms ease-in
         color: $mono-0
         text-shadow: 0 1px 0 lighten($mono-3, 20%)
+
+      .handle
+        position: absolute
+        top: 0
+        height: 2em
+        width: 4px
+        background-color: hsla(0, 100%, 100%, 0.25)
+
+        &:hover
+          cursor: col-resize
+
+        &.left
+          left: -2px
+
+        &.right
+          right: -2px
+
+    &.resizing
+      cursor: col-resize
+      > div.loop:not(.current)
+        background-color: fade-out($green, 0.6)
+
 
 .layers
   flex: 1

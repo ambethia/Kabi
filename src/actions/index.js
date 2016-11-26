@@ -19,6 +19,16 @@ export const setFrame = (frame) => ({
   frame
 })
 
+export const setLoopTo = (frame) => ({
+  type: 'SET_LOOP_TO',
+  frame
+})
+
+export const setLoopFrom = (frame) => ({
+  type: 'SET_LOOP_FROM',
+  frame
+})
+
 export const createLayer = (count) => ({
   type: 'CREATE_LAYER',
   count

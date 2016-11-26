@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
       return { ...state, ghosting: !state.ghosting }
     case 'SET_FRAME':
       return { ...state, currentFrame: action.frame }
+    case 'SET_LOOP_FROM':
+      return { ...state, loopFrom: action.frame }
+    case 'SET_LOOP_TO':
+      return { ...state, loopTo: action.frame }
     case 'SET_LAYER':
       return { ...state, currentLayer: action.index }
     case 'CREATE_LAYER':
