@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setTool } from '../actions'
+import { setTool, saveDocument, loadDocument, newDocument } from '../actions'
 import ToolbarView from '../components/ToolbarView'
 
 const Toolbar = connect(
@@ -7,7 +7,10 @@ const Toolbar = connect(
     currentTool: state.controls.currentTool
   }),
   dispatch => ({
-    onSetTool (tool) { dispatch(setTool(tool)) }
+    onSetTool (tool) { dispatch(setTool(tool)) },
+    onSaveDocument () { dispatch(saveDocument()) },
+    onLoadDocument () { dispatch(loadDocument()) },
+    onNewDocument () { dispatch(newDocument()) }
   })
 )(ToolbarView)
 

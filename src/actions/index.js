@@ -89,3 +89,15 @@ export const openModal = (name, data) => ({
 export const closeModal = () => ({
   type: 'CLOSE_MODAL'
 })
+
+export const saveDocument = () => ({
+  type: 'SAVE_DOCUMENT'
+})
+
+export const loadDocument = () => ({
+  type: 'LOAD_DOCUMENT'
+})
+
+export const newDocument = () => ({
+  type: 'NEW_DOCUMENT'
+})

@@ -5,16 +5,21 @@ import style from './screen.sass'
 const cx = classNames.bind(style)
 
 const ICONS = {
-  add: require('./Add.svg'),
-  brush: require('./Brush.svg'),
-  cross: require('./Cross.svg'),
-  eraser: require('./Eraser.svg'),
-  eye: require('./Eye.svg'),
-  ghost: require('./Ghost.svg'),
-  loop: require('./Loop.svg'),
-  pause: require('./Pause.svg'),
-  play: require('./Play.svg'),
-  trash: require('./Trash.svg')
+  add: require('./add.svg'),
+  brush: require('./brush.svg'),
+  cross: require('./cross.svg'),
+  eraser: require('./eraser.svg'),
+  eye: require('./eye.svg'),
+  ghost: require('./ghost.svg'),
+  load: require('./load.svg'),
+  loop: require('./loop.svg'),
+  new: require('./new.svg'),
+  pause: require('./pause.svg'),
+  play: require('./play.svg'),
+  save: require('./save.svg'),
+  settings: require('./settings.svg'),
+  trash: require('./trash.svg'),
+  viewReset: require('./view-reset.svg')
 }
 
 const IconButton = ({
@@ -33,6 +38,7 @@ const IconButton = ({
   return <button
     onClick={handleClick}
     className={cx('icon', type, { disabled, active })}
+    style={{height: `${height + 4}px`}}
   >
     <img src={ICONS[glyph]} width={width} height={height} />
   </button>
