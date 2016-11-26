@@ -67,17 +67,27 @@ export default (state = initialState, action) => {
           ...state.layers.slice(0, action.layer),
           {
             ...layer,
-            cels: [
-              ...layer.cels.slice(0, index),
-              {
-                ...cel,
-                strokes: [
-                  ...cel.strokes.slice(0, action.index),
-                  ...cel.strokes.slice(action.index + 1)
+            cels: (() => {
+              // Remove cels with no strokes
+              if (cel.strokes.length > 1) {
+                return [
+                  ...layer.cels.slice(0, index),
+                  {
+                    ...cel,
+                    strokes: [
+                      ...cel.strokes.slice(0, action.index),
+                      ...cel.strokes.slice(action.index + 1)
+                    ]
+                  },
+                  ...layer.cels.slice(index + 1)
                 ]
-              },
-              ...layer.cels.slice(index + 1)
-            ]
+              } else {
+                return [
+                  ...layer.cels.slice(0, index),
+                  ...layer.cels.slice(index + 1)
+                ]
+              }
+            })()
           },
           ...state.layers.slice(action.layer + 1)
         ]
